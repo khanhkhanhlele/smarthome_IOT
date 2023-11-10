@@ -95,7 +95,7 @@ button {
 
     <script>
         function loginFunction() {
-            let baseUrl = "http://localhost:3000";
+            let baseUrl = "https://iot-server-7kpz.onrender.com";
             let email = $("#email").val();
             let password = $("#password").val();
             $.ajax({
@@ -110,7 +110,7 @@ button {
                 success: function(data) {
                     localStorage.setItem("token", "Bearer " + data.token);
                     localStorage.setItem("nameUser", data.user.name);
-                    location.href = "./iot.html";
+                    location.href = "/iot.html";
                 },
                 error: function(err) {
                     console.log(err)
