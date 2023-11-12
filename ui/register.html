@@ -74,11 +74,12 @@ button {
     <center> <h1 class="heading"> Happy Home </h1> </center>   
     <div class="loginForm">  
         <div class="container heading" style="font-family: MISA Font Bold; font-size: 18px;">   
+            <label>Name: </label>   
+            <input type="text" placeholder="Nhập tên tài khoản" name="name" required id="name">  
             <label>Email: </label>   
-            <input type="text" placeholder="Nhập tên tài khoản" name="email" required id="email">  
+            <input type="text" placeholder="Nhập email của bạn" name="email" required id="email">  
             <label>Mật khẩu: </label>   
             <input type="password" placeholder="Nhập mật khẩu" name="password" required id="password">  
-            <button id="login_button" style="font-family: MISA Font Bold; font-size: 26px;" onclick="loginFunction()">Đăng nhập</button>   
             <button id="register_button" style="font-family: MISA Font Bold; font-size: 26px;" onclick="registerFunction()">Đăng ký</button>   
             <!-- <input type="checkbox" checked="checked"> Remember me   
             <button type="button" class="cancelbtn"> Cancel</button>    -->
@@ -95,16 +96,18 @@ button {
     <!-- <script src="./js/pages/login.js"></script> -->
 
     <script>
-        function loginFunction() {
+        function registerFunction() {
             let baseUrl = "http://localhost:3000";
             let email = $("#email").val();
+            let name = $("#name").val();
             let password = $("#password").val();
             $.ajax({
-                url: baseUrl + '/api/auth/login',
+                url: baseUrl + '/api/auth/register',
                 type: "post",
                 dataType: "json",   
                 contentType: "application/json; charset=UTF-8",
                 data: JSON.stringify({
+                    name: name,
                     email: email,
                     password: password
                 }),
@@ -115,15 +118,12 @@ button {
                 },
                 error: function(err) {
                     console.log(err)
-                    alert("Tài khoản mật khẩu không chính xác")
+                    alert("Vui lòng thử lại sau")
                 }
             })
             
         }
-        function registerFunction() {
-            window.location.href='./register.html';
-            
-        }
+     
     </script>
     
 </body>   

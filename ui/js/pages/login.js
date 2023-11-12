@@ -1,4 +1,4 @@
-var baseUrl = "https://iot-server-7kpz.onrender.com";
+var baseUrl = "http://localhost:3000";
 
 function loginFunction() {
     let email = $("#email").val();
