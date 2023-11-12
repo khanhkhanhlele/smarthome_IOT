@@ -9,7 +9,7 @@ const mqttPort = process.env.MQTTPORT;
 const username = process.env.MQTTUSERNAME;
 const password = process.env.MQTTPASSWORD;
 
-console.log(username, password);
+//console.log(username, password);
 
 const addOneData = async (data) => {
     try {

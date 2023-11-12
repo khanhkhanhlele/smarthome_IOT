@@ -114,7 +114,7 @@ button {
                 success: function(data) {
                     localStorage.setItem("token", "Bearer " + data.token);
                     localStorage.setItem("nameUser", data.user.name);
-                    location.href = "/ui/iot.html";
+                    location.href = "./iot.html";
                 },
                 error: function(err) {
                     console.log(err)

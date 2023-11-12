@@ -1,11 +1,12 @@
 var mqtt = require('mqtt')
 
 var options = {
+    //host: '9aa37a8ca6af4302846bb1bd4c581dac.s2.eu.hivemq.cloud',
     host: '9aa37a8ca6af4302846bb1bd4c581dac.s2.eu.hivemq.cloud',
     port: 8883,
     protocol: 'mqtts',
-    username: 'hatuank97lhp',
-    password: '20022001'
+    username: 'lenamkhanh',
+    password: 'Namkhanh2172'
 }
 
 // initialize the MQTT client
