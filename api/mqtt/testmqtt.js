@@ -1,7 +1,7 @@
 var mqtt = require('mqtt')
 
 var options = {
-    host: 'f074580b17234213a23f6786446db996.s2.eu.hivemq.cloud',
+    host: 'c878d64840454cd6a4b648b5a1361691.s1.eu.hivemq.cloud',
     port: 8883,
     protocol: 'mqtts',
     username: 'lenamkhanh',
@@ -26,7 +26,13 @@ client.on('message', function (topic, message) {
 });
 
 // subscribe to topic 'my/test/topic'
-client.subscribe('my/test/topic');
+client.subscribe('IOT');
 
 // publish message 'Hello' to topic 'my/test/topic'
-client.publish('my/test/topic', 'Hello');
+const msg = {
+    "name": "status",
+    "deviceId": "640ecef593e18848065f2cc5",
+    "value": "ON"
+};
+
+client.publish('IOT', JSON.stringify(msg));
