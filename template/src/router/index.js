@@ -14,6 +14,16 @@ const router = createRouter({
                     component: () => import('@/views/Dashboard.vue')
                 },
                 {
+                    path: '/room',
+                    name: 'room',
+                    component: () => import('@/views/room/list_room.vue')
+                },
+                {
+                    path: '/device/room/:id',
+                    name: 'device',
+                    component: () => import('@/views/device/list_device.vue')
+                },
+                {
                     path: '/uikit/formlayout',
                     name: 'formlayout',
                     component: () => import('@/views/uikit/FormLayout.vue')

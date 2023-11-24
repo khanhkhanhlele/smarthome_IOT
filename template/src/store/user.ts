@@ -33,14 +33,13 @@ export const useUserStore = defineStore({
         },
         async login(params) {
             try {
-                const { data } = await login(params);
-                this.setToken(data.token);
-                console.log(data);
+                const  {user, token}  = await login(params);
+                this.setToken(token);
                 Storage.set('INFO_ACCOUNT', data?.user);
             } catch (error) {
                 return Promise.reject(error);
             }
-        },
+        }
     }
 });
 

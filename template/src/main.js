@@ -99,14 +99,12 @@ import TreeSelect from 'primevue/treeselect';
 import TreeTable from 'primevue/treetable';
 import TriStateCheckbox from 'primevue/tristatecheckbox';
 import VirtualScroller from 'primevue/virtualscroller';
-
 import BlockViewer from '@/components/BlockViewer.vue';
 
 import '@/assets/styles.scss';
 import { createPinia } from 'pinia';
-
 const app = createApp(App);
-const pinia = createPinia()
+const pinia = createPinia();
 app.use(router);
 app.use(pinia);
 app.use(PrimeVue, { ripple: true });

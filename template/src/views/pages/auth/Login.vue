@@ -4,15 +4,18 @@ import { ref, computed } from 'vue';
 import AppConfig from '@/layout/AppConfig.vue';
 import { useUserStore } from './../../../store/user';
 import to from './../../../utils/awaitTo';
+import { useRouter } from 'vue-router';
 const { layoutConfig } = useLayout();
 const email = ref('');
 const password = ref('');
 const checked = ref(false);
 const userStore = useUserStore();
+const router = useRouter();
 const loginFunc = async () => {
-    console.log(email.value);
     const res = await to(userStore.login({ email: email.value, password: password.value }));
     console.log(res);
+    if(!res[1])  router.push('/');
+
 };
 const logoUrl = computed(() => {
     return `layout/images/${layoutConfig.darkTheme.value ? 'logo-white' : 'logo-dark'}.svg`;

@@ -8,11 +8,16 @@ export function updateAccountInfo(data: any) {
     });
 }
 export function login(data: any) {
-    return request<BaseResponse<any>>({
-        url: 'api/auth/login',
-        method: 'post',
-        data
-    });
+    return request<BaseResponse<any>>(
+        {
+            url: 'api/auth/login',
+            method: 'post',
+            data
+        },
+        {
+            isGetDataDirectly: false
+        }
+    );
 }
 
 export function updatePassword(data: API.ChangePasswordParams) {

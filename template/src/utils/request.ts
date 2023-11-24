@@ -9,10 +9,9 @@ export interface RequestOptions {
     successMsg?: string;
     errorMsg?: string;
 }
-
+const baseApiUrl = 'http://127.0.0.1:3000/';
 const UNKNOWN_ERROR = 'Unknown error, please try again';
 // const IS_PROD = ['production', 'prod'].includes(import.meta.env.NODE_ENV);
-const baseApiUrl ='http://127.0.0.1:3000/';
 const service = axios.create({
     // baseURL: baseApiUrl,
     timeout: 6000
@@ -22,7 +21,7 @@ service.interceptors.request.use(
     (config) => {
         const token = Storage.get(ACCESS_TOKEN_KEY);
         if (token && config.headers) {
-            config.headers['Authorization'] = token;
+            config.headers['Authorization'] = `Bearer ${token}`;
         }
         return config;
     },
@@ -34,25 +33,25 @@ service.interceptors.request.use(
 service.interceptors.response.use(
     (response) => {
         const res = response.data;
-
+        return res;
         // if the custom code is not 200, it is judged as an error.
-        if (res.code !== 200) {
-            // toast.add({ severity: 'error', summary: 'Error Message', detail: res.message });
-            // Message.error(res.message || UNKNOWN_ERROR);
+        // if (res.code !== 200) {
+        //     // toast.add({ severity: 'error', summary: 'Error Message', detail: res.message });
+        //     // Message.error(res.message || UNKNOWN_ERROR);
 
-            // Illegal token
-            if (res.code === 11001 || res.code === 11002) {
-                window.localStorage.clear();
-                window.location.reload();
-            }
+        //     // Illegal token
+        //     if (res.code === 11001 || res.code === 11002) {
+        //         window.localStorage.clear();
+        //         window.location.reload();
+        //     }
 
-            // throw other
-            const error = new Error(res.message || UNKNOWN_ERROR) as Error & { code: any };
-            error.code = res.code;
-            return Promise.reject(error);
-        } else {
-            return res;
-        }
+        //     // throw other
+        //     // const error = new Error(res.message || UNKNOWN_ERROR) as Error & { code: any };
+        //     // error.code = res.code;
+        //     // return Promise.reject(error);
+        // } else {
+        //     return res;
+        // }
     },
     (error) => {
         const errMsg = error?.response?.data?.message ?? UNKNOWN_ERROR;
@@ -85,7 +84,7 @@ export const request = async <T = any>(config: AxiosRequestConfig, options: Requ
         const res = await service.request(config);
         // successMsg && toast.add({ severity: 'success', summary: 'Success Mesage', detail: successMsg });
         // errorMsg && toast.add({ severity: 'error', summary: 'Error Mesage', detail: errorMsg });
-        return isGetDataDirectly ? res.data : res;
+        return res;
     } catch (error: any) {
         return Promise.reject(error);
     }
