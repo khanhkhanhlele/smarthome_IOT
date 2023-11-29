@@ -71,16 +71,7 @@ const addDatas = async (topic, message) => {
         console.log(err);
     }
 }
-// subscribe to topic 'my/test/topic'
 client.subscribe('IOT');
-
-// const msg = {
-//     "name": "status",
-//     "deviceId": "656706db7d6372d8674850a2",
-//     "value": "OFF"
-// };
-
-//client.publish('IOT', JSON.stringify(msg));
 
 client.on("message", addDatas);
 

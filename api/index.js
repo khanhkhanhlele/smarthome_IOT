@@ -1,5 +1,6 @@
 require('dotenv').config();
 require('./mqtt/subscriber');
+require('./mqtt/subv_2');
 const cors = require('cors');
 const express = require('express');
 const connectDb = require('./config/db-config');
