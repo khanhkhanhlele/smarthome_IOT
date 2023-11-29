@@ -1,11 +1,11 @@
 var mqtt = require('mqtt')
 
 var options = {
-    host: 'c878d64840454cd6a4b648b5a1361691.s1.eu.hivemq.cloud',
-    port: 8883,
-    protocol: 'mqtts',
-    username: 'lenamkhanh',
-    password: 'Namkhanh2172'
+    host: 'broker.emqx.io',
+    port: 1883,
+    protocol: 'mqtt',
+    // username: 'lenamkhanh',
+    // password: 'Namkhanh2172'
 }
 
 // initialize the MQTT client
@@ -31,8 +31,8 @@ client.subscribe('IOT');
 // publish message 'Hello' to topic 'my/test/topic'
 const msg = {
     "name": "status",
-    "deviceId": "640ecef593e18848065f2cc5",
-    "value": "ON"
+    "deviceId": "656706db7d6372d8674850a2",
+    "value": "OFF"
 };
 
 client.publish('IOT', JSON.stringify(msg));
