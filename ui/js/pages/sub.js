@@ -10,8 +10,8 @@ receiver.onMessageArrived = onMessageArrived;
 // Connect the client to the broker
 receiver.connect({
   onSuccess: onConnect,
-  userName: username,
-  password: password,
+  // userName: username,
+  // password: password,
   useSSL: true
 });
 

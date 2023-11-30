@@ -1,9 +1,7 @@
-const broker = '79066356b53e43128fe4724754cc9c32.s1.eu.hivemq.cloud';
-const port = 8884;
-const topicData = 'iot_hust/data';
-const topicCommand = 'iot_hust/command';
-const username = 'iothust';
-const password = 'haobinhtuan';
+const broker = 'broker.emqx.io';
+const port = 1884;
+const topicData = 'data';
+const topicCommand = 'command';
 const client_id = 'python-mqtt-1';
 
 const client = new Paho.MQTT.Client(broker, port, client_id);
@@ -22,7 +20,6 @@ function onMessageDelivered() {
 
 function publishMessage(message) {
   //const message = document.getElementById('message').value;
-  
   const mqttMessage = new Paho.MQTT.Message(message);
   mqttMessage.destinationName = topicCommand;
   mqttMessage.qos = 0;
@@ -34,8 +31,8 @@ function connectToBroker() {
   client.connect({
     onSuccess: onConnect,
     onFailure: onFailure,
-    userName: username,
-    password: password,
+    // userName: username,
+    // password: password,
     useSSL: true,
   });
 }

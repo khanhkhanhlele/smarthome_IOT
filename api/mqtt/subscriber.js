@@ -6,8 +6,9 @@ const topic1 = process.env.TOPIC1;
 const topic2 = process.env.TOPIC2;
 const host = process.env.HOST;
 const mqttPort = process.env.MQTTPORT;
-const username = process.env.MQTTUSERNAME;
-const password = process.env.MQTTPASSWORD;
+const mqttProtocol = process.env.MQTTPROTOCOL;
+// const username = process.env.MQTTUSERNAME;
+// const password = process.env.MQTTPASSWORD;
 
 //console.log(username, password);
 
@@ -63,9 +64,9 @@ const addDatas = async (topic, message) => {
 const client = mqtt.connect({
     host: host,
     port: mqttPort,
-    protocol: 'mqtts',
-    username: username,
-    password: password
+    protocol: mqttProtocol,
+    // username: username,
+    // password: password
     }
 );
 
