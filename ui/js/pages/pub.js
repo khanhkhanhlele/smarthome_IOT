@@ -1,7 +1,7 @@
 const broker = 'broker.emqx.io';
 const port = 1884;
-const topicData = 'data';
-const topicCommand = 'command';
+const topicData = 'IOT_data';
+const topicCommand = 'IOT_command';
 const client_id = 'python-mqtt-1';
 
 const client = new Paho.MQTT.Client(broker, port, client_id);
