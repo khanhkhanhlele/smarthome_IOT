@@ -103,11 +103,15 @@ const router = useRouter();
 const showDevice = (data) => {
     router.push(`/device/room/${data._id}`);
 };
+const updateList = (data) => {
+  console.log(data.result);
+  listRoom.value.push(data.result);
+  };
 </script>
 
 <template>
     <div class="card">
-        <create_room></create_room>
+        <create_room   @update-list="updateList"></create_room>
         <Carousel :value="listRoom" :numVisible="3" :numScroll="3" :responsiveOptions="responsiveOptions" style="margin-top: 40px">
             <template #item="slotProps">
                 <div class="border-1 surface-border border-round m-2 text-center py-5 px-3" @click="showDevice(slotProps.data)">

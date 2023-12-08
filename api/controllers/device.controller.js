@@ -51,6 +51,7 @@ const addToRoom = async (req, res) => {
         const roomId = req.body.roomId;
         const deviceTypeId = req.body.deviceTypeId;
         const deviceName = req.body.deviceName;
+        console.log(req.body);
         if (!deviceName) {
             throw new NotFoundError("Device name not found");
         }
@@ -85,6 +86,8 @@ const update = async (req, res) => {
         if (!result) {
             throw new NotFoundError("Device not found");
         }
+        // thêm đoạn code thay đổi status đến thiết bị
+
         return res.status(StatusCodes.OK).json({ result });
     } catch (err) {
         return res.status(400).json({"err": err.toString()});
@@ -105,6 +108,7 @@ const destroy = async (req, res) => {
         return res.status(400).json({"err": err.toString()});
     }
 }
+
 
 module.exports = {
     getById,

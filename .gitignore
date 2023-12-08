@@ -1,2 +1,5 @@
 /api/package-lock.json
 /api/node_modules
+/template/package-lock.json
+/template/node_modules
+/node_modules

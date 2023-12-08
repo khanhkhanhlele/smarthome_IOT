@@ -1,16 +1,20 @@
 <script setup>
-import { ref } from 'vue';
+import { ref,defineEmits } from 'vue';
 import { createRoom } from './../../api/room/index';
 import { useToast } from 'primevue/usetoast';
 const toast = useToast();
 const visible = ref(false);
 const name = ref();
+const emit = defineEmits(['update-list']);
 const submit = async () => {
     const res = await createRoom({ name: name.value });
     console.log(res);
     if (res.result) toast.add({ severity: 'success', summary: 'Success', detail: 'Created room sucessfully', life: 3000 });
     visible.value = false;
+    emit('update-list', res);
+    console.log(res);
 };
+
 </script>
 <template>
     <div>
