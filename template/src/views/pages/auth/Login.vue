@@ -5,18 +5,27 @@ import AppConfig from '@/layout/AppConfig.vue';
 import { useUserStore } from './../../../store/user';
 import to from './../../../utils/awaitTo';
 import { useRouter } from 'vue-router';
+
 const { layoutConfig } = useLayout();
 const email = ref('');
 const password = ref('');
 const checked = ref(false);
 const userStore = useUserStore();
 const router = useRouter();
+
 const loginFunc = async () => {
     const res = await to(userStore.login({ email: email.value, password: password.value }));
     console.log(res);
-    if(!res[1])  router.push('/');
-
+    if (!res[1]) router.push('/');
 };
+
+const registerFunc = async () => {
+    // Thực hiện các bước để đăng ký tài khoản
+    const res = await to(userStore.register({ email: email.value, password: password.value }));
+    console.log(res);
+    if (!res[1]) router.push('/');
+};
+
 const logoUrl = computed(() => {
     return `layout/images/${layoutConfig.darkTheme.value ? 'logo-white' : 'logo-dark'}.svg`;
 });
@@ -48,7 +57,9 @@ const logoUrl = computed(() => {
                             </div>
                             <a class="font-medium no-underline ml-2 text-right cursor-pointer" style="color: var(--primary-color)">Forgot password?</a>
                         </div>
+
                         <Button label="Sign In" class="w-full p-3 text-xl" @click="loginFunc"></Button>
+                        <Button label="Register" class="w-full p-3 text-xl mt-3" @click="registerFunc"></Button>
                     </div>
                 </div>
             </div>
@@ -58,13 +69,13 @@ const logoUrl = computed(() => {
 </template>
 
 <style scoped>
-.pi-eye {
-    transform: scale(1.6);
-    margin-right: 1rem;
-}
+    .pi-eye {
+        transform: scale(1.6);
+        margin-right: 1rem;
+    }
 
-.pi-eye-slash {
-    transform: scale(1.6);
-    margin-right: 1rem;
-}
+    .pi-eye-slash {
+        transform: scale(1.6);
+        margin-right: 1rem;
+    }
 </style>
