@@ -1,18 +1,25 @@
-const broker = 'broker.emqx.io';
+const host = 'broker.emqx.io';
 const port = 1884;
 const topicData = 'IOT_data';
 const topicCommand = 'IOT_command';
 const client_id = 'python-mqtt-1';
+const mqtt = require("mqtt");
+// const client = new Paho.MQTT.Client(broker, port, client_id);
+const client = mqtt.connect({
+  host: host,
+  port: port,
+  protocol: "mqtt",
+  // username: username,
+  // password: password
+  }
+);
+client.on('connect', function () {
+  console.log('Connected');
+});
 
-const client = new Paho.MQTT.Client(broker, port, client_id);
-
-function onConnect() {
-  console.log('Connected to MQTT broker');
-}
-
-function onFailure(err) {
-  console.error('Failed to connect to MQTT broker:', err);
-}
+client.on('error', function (error) {
+  console.log(error);
+});
 
 function onMessageDelivered() {
   console.log('Message delivered');
@@ -27,15 +34,7 @@ function publishMessage(message) {
   client.send(mqttMessage);
 }
 
-function connectToBroker() {
-  client.connect({
-    onSuccess: onConnect,
-    onFailure: onFailure,
-    // userName: username,
-    // password: password,
-    useSSL: true,
-  });
-}
+
 
 function setupForm() {
   const form = document.querySelector('form');
