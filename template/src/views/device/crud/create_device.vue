@@ -41,7 +41,7 @@ const props = defineProps({
     <div>
         <Button label="Create" icon="pi pi-external-link" @click="show" />
         <Toast />
-        <Dialog v-model:visible="visible" modal header="Tạo phòng mới" :style="{ width: '50rem' }" :breakpoints="{ '1199px': '75vw', '575px': '90vw' }">
+        <Dialog v-model:visible="visible" modal header="Tạo thiết bị mới" :style="{ width: '50rem' }" :breakpoints="{ '1199px': '75vw', '575px': '90vw' }">
             <div class="flex flex-column gap-2">
                 <label for="username">Device name</label>
                 <InputText id="username" v-model="form.deviceName" aria-describedby="username-help" />

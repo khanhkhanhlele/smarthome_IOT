@@ -19,11 +19,8 @@ const loginFunc = async () => {
     if (!res[1]) router.push('/');
 };
 
-const registerFunc = async () => {
-    // Thực hiện các bước để đăng ký tài khoản
-    const res = await to(userStore.register({ email: email.value, password: password.value }));
-    console.log(res);
-    if (!res[1]) router.push('/');
+const registerFunc = () => {
+    router.push('/auth/register'); // Chuyển hướng đến trang đăng ký
 };
 
 const logoUrl = computed(() => {
