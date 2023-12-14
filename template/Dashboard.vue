@@ -20,7 +20,7 @@
                 <div class="text-900 font-medium text-xl">{{ device.value }}</div>
               </div>
               <div class="flex flex-column">
-                <div class="flex items-center justify-center bg-blue-100 rounded-full" style="width: 12 rem; height: 12 rem">
+                <div class="flex items-center justify-center bg-blue-100 rounded-full" style="width: 3.5rem; height: 3.5rem">
                   <i class="pi pi-home text-blue-500 text-xl"></i>
                 </div>
               </div>
