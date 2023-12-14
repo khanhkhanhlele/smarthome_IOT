@@ -10,7 +10,7 @@
       </div>
   
       <!-- Device cards and Charts -->
-      <div class="grid grid-cols-12 gap-4">
+      <div class="grid grid-cols-12 gap-6">
         <!-- Device cards -->
         <div v-for="device in products" :key="device.name" class="col-span-12 sm:col-span-6 lg:col-span-4 xl:col-span-3">
           <div class="card mb-4">
@@ -20,7 +20,7 @@
                 <div class="text-900 font-medium text-xl">{{ device.value }}</div>
               </div>
               <div class="flex flex-column">
-                <div class="flex items-center justify-center bg-blue-100 rounded-full" style="width: 2.5rem; height: 2.5rem">
+                <div class="flex items-center justify-center bg-blue-100 rounded-full" style="width: 12 rem; height: 12 rem">
                   <i class="pi pi-home text-blue-500 text-xl"></i>
                 </div>
               </div>
@@ -30,23 +30,24 @@
         </div>
   
         <!-- First Chart -->
-        <div class="col-span-12 lg:col-span-6">
+        <div class="col-12 lg:col-start-1 lg:col-span-12 xl:col-span-6">
           <div class="card">
             <h5>Device Overview 1</h5>
-            <Chart type="line" :data="lineData1" :options="lineOptions" />
+            <Chart type="line" :data="lineData" :options="lineOptions" />
           </div>
         </div>
   
         <!-- Second Chart -->
-        <div class="col-span-12 lg:col-span-6">
+        <div class="col-12 lg:col-start-1 lg:col-span-12 xl:col-span-6">
           <div class="card">
             <h5>Device Overview 2</h5>
-            <Chart type="line" :data="lineData2" :options="lineOptions" />
+            <Chart type="line" :data="lineData" :options="lineOptions" />
           </div>
         </div>
       </div>
     </div>
   </template>
+  
 
 <script setup>
 import { onMounted, ref } from 'vue';
