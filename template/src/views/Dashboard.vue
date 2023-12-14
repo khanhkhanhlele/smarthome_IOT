@@ -1,45 +1,56 @@
 <template>
-  <div class="grid">
-    <div class="mb-4">
-      <label for="roomSelect" class="block text-500 font-medium mb-2">Select Room:</label>
-      <select v-model="selectedRoom" id="roomSelect" class="form-select w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 transition">
-        <option v-for="room in listRoom" :key="room._id" :value="room._id">{{ room.name }}</option>
-      </select>
-    </div>
-    <!-- Device cards -->
-    <div v-for="device in products" :key="device.name" class="col-12 lg:col-6 xl:col-3">
-      <div class="card mb-0">
-        <div class="flex justify-content-between mb-3">
-          <div>
-            <span class="block text-500 font-medium mb-3">{{ device.name }}</span>
-            <div class="text-900 font-medium text-xl">{{ device.value }}</div>
-          </div>
-          <div class="flex flex-column">
-            <div class="flex align-items-center justify-content-center bg-blue-100 border-round" style="width: 2.5rem; height: 2.5rem">
-              <i class="pi pi-home text-blue-500 text-xl"></i>
+    <div>
+      <!-- Room selection dropdown -->
+      <div class="mb-4">
+        <label for="roomSelect" class="block text-500 font-medium mb-2">Select Room:</label>
+        <select v-model="selectedRoom" id="roomSelect" class="form-select w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 transition" @change="onRoomChange">
+          <option value="">All Rooms</option>
+          <option v-for="room in listRoom" :key="room._id" :value="room._id">{{ room.name }}</option>
+        </select>
+      </div>
+  
+      <!-- Device cards and Charts -->
+      <div class="grid grid-cols-12 gap-4">
+        <!-- Device cards -->
+        <div v-for="device in products" :key="device.name" class="col-span-12 sm:col-span-6 lg:col-span-4 xl:col-span-3">
+          <div class="card mb-4">
+            <div class="flex justify-between mb-3">
+              <div>
+                <span class="block text-500 font-medium mb-3">{{ device.name }}</span>
+                <div class="text-900 font-medium text-xl">{{ device.value }}</div>
+              </div>
+              <div class="flex flex-column">
+                <div class="flex items-center justify-center bg-blue-100 rounded-full" style="width: 2.5rem; height: 2.5rem">
+                  <i class="pi pi-home text-blue-500 text-xl"></i>
+                </div>
+              </div>
             </div>
+            <span class="text-green-500 font-medium">Custom Status</span>
           </div>
         </div>
-        <span class="text-green-500 font-medium">Custom Status</span>
+  
+        <!-- First Chart -->
+        <div class="col-span-12 lg:col-span-6">
+          <div class="card">
+            <h5>Device Overview 1</h5>
+            <Chart type="line" :data="lineData1" :options="lineOptions" />
+          </div>
+        </div>
+  
+        <!-- Second Chart -->
+        <div class="col-span-12 lg:col-span-6">
+          <div class="card">
+            <h5>Device Overview 2</h5>
+            <Chart type="line" :data="lineData2" :options="lineOptions" />
+          </div>
+        </div>
       </div>
     </div>
-
-    <div class="col-12 xl:col-6">
-      <!-- Chart displaying information -->
-      <div class="card">
-        <h5>Device Overview</h5>
-        <Chart type="line" :data="lineData" :options="lineOptions" />
-      </div>
-      
-      <!-- Other sections of the dashboard -->
-      <!-- ... (Other sections can be adjusted based on your requirements) ... -->
-    </div>
-  </div>
-</template>
+  </template>
 
 <script setup>
 import { onMounted, ref } from 'vue';
-import { getRoom } from 'C:/Users/hongh/OneDrive/Desktop/New folder/smarthome_IOT/template/src/api/room/index.ts';
+import { getRoom } from '../api/room';
 const products = ref([]);
 const lineData = ref({
   labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
