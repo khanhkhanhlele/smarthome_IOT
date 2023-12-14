@@ -75,7 +75,7 @@ const items = ref([
         icon: 'pi pi-fw pi-sign-out',
         command: () => {
             useUserStore().resetToken();
-            router.push('/landing');
+            router.push('/auth/login');
         }
     }
 ]);
