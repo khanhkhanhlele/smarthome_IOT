@@ -28,7 +28,7 @@ npm i
 
 run frontend:
 ```sh
-npm run dev
+npm run start
 ```
 
 [login page](http://localhost:5173/#/auth/login)
