@@ -1,115 +1,137 @@
-<script setup>
-import { ref, onMounted, defineEmits } from 'vue';
-import create_room from './create_room.vue';
-import { getRoom, deleteRoom } from '../../api/room';
-import { useRouter } from 'vue-router';
+<template>
+    page này fix cứng , chỉ truyền số liệu, không CRUD
+    <div>
+      <!-- Room selection dropdown -->
+      <div class="mb-4">
+        <label for="roomSelect" class="block text-500 font-medium mb-2">Select Room:</label>
+        <select v-model="selectedRoom" id="roomSelect" class="form-select w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 transition" @change="onRoomChange">
+          <option value="">All Rooms</option>
+          <option v-for="room in listRoom" :key="room._id" :value="room._id">{{ room.name }}</option>
+        </select>
+      </div>
+  
+      <!-- Device cards and Charts -->
+      <div class="grid grid-cols-12 gap-6">
+        <!-- Device cards -->
+        <div v-for="device in products" :key="device.name" class="col-span-12 sm:col-span-6 lg:col-span-4 xl:col-span-3">
+          <div class="card mb-4">
+            <div class="flex justify-between mb-3">
+              <div>
+                <span class="block text-500 font-medium mb-3">{{ device.name }}</span>
+                <div class="text-900 font-medium text-xl">{{ device.value }}</div>
+              </div>
+              <div class="flex flex-column">
+                <div class="flex items-center justify-center bg-blue-100 rounded-full" style="width: 3.5rem; height: 3.5rem">
+                  <i class="pi pi-home text-blue-500 text-xl"></i>
+                </div>
+              </div>
+            </div>
+            <span class="text-green-500 font-medium">Custom Status</span>
+          </div>
+        </div>
+  
+        <!-- First Chart -->
+        <div class="col-12 lg:col-start-1 lg:col-span-12 xl:col-span-6">
+          <div class="card">
+            <h5>Device Overview 1</h5>
+            <Chart type="line" :data="lineData" :options="lineOptions" />
+          </div>
+        </div>
+  
+        <!-- Second Chart -->
+        <div class="col-12 lg:col-start-1 lg:col-span-12 xl:col-span-6">
+          <div class="card">
+            <h5>Device Overview 2</h5>
+            <Chart type="line" :data="lineData" :options="lineOptions" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </template>
+  
 
+<script setup>
+import { onMounted, ref } from 'vue';
+import { getRoom } from '../../api/room';
+const products = ref([]);
+const lineData = ref({
+  labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+  datasets: [
+    {
+      label: 'First Dataset',
+      data: [65, 59, 80, 81, 56, 55, 40],
+      fill: false,
+      backgroundColor: '#2f4860',
+      borderColor: '#2f4860',
+      tension: 0.4
+    },
+    {
+      label: 'Second Dataset',
+      data: [28, 48, 40, 19, 86, 27, 90],
+      fill: false,
+      backgroundColor: '#00bb7e',
+      borderColor: '#00bb7e',
+      tension: 0.4
+    }
+  ]
+});
+const lineOptions = ref({
+  plugins: {
+    legend: {
+      labels: {
+        color: '#495057'
+      }
+    }
+  },
+  scales: {
+    x: {
+      ticks: {
+        color: '#495057'
+      },
+      grid: {
+        color: '#ebedef'
+      }
+    },
+    y: {
+      ticks: {
+        color: '#495057'
+      },
+      grid: {
+        color: '#ebedef'
+      }
+    }
+  }
+});
 const listRoom = ref([]);
-const router = useRouter();
-const emit = defineEmits(['update-list']);
+const selectedRoom = ref(null);
 
 onMounted(async () => {
+  await loadData();
   await loadRooms();
 });
-
+const loadData = async () => {
+  // Fetch data from API or any other data source
+  const fakeDeviceData = [
+    { name: 'Device A', value: 65 },
+    { name: 'Device B', value: 30 },
+    { name: 'Device C', value: 30 },
+    { name: 'Device D', value: 30 },
+    // ... Add more devices here
+  ];
+  products.value = fakeDeviceData;
+};
 const loadRooms = async () => {
   try {
     // Lấy danh sách phòng từ API
     const res = await getRoom();
     listRoom.value = res;
-  } catch (error) {
-    console.error(error);
-  }
-};
 
-const responsiveOptions = ref([
-  {
-    breakpoint: '1400px',
-    numVisible: 2,
-    numScroll: 1,
-  },
-  {
-    breakpoint: '1199px',
-    numVisible: 3,
-    numScroll: 1,
-  },
-  {
-    breakpoint: '767px',
-    numVisible: 2,
-    numScroll: 1,
-  },
-  {
-    breakpoint: '575px',
-    numVisible: 1,
-    numScroll: 1,
-  },
-]);
-
-const getSeverity = (status) => {
-  switch (status) {
-    case 'INSTOCK':
-      return 'success';
-    case 'LOWSTOCK':
-      return 'warning';
-    case 'OUTOFSTOCK':
-      return 'danger';
-    default:
-      return null;
-  }
-};
-
-const showDevice = (data) => {
-  router.push(`/device/room/${data._id}`);
-};
-
-const updateList = (data) => {
-  listRoom.value.push(data.result);
-};
-
-const deleteRoomHandler = async (roomId) => {
-  try {
-    const res = await deleteRoom({ roomId });
-    console.log(res);
-
-    if (res.message === 'Delete success') {
-      // Thông báo xóa thành công
-      if (res.result) {
-        toast.add({ severity: 'success', summary: 'Success', detail: 'Created room sucessfully', life: 3000 });
-      }
-
-      // Cập nhật danh sách phòng sau khi xóa
-      listRoom.value = listRoom.value.filter((room) => room._id !== roomId);
-      emit('update-list', res);
-      await loadRooms();
+    // Lựa chọn phòng đầu tiên theo danh sách
+    if (listRoom.value.length > 0) {
+      selectedRoom.value = listRoom.value[0]._id;
     }
   } catch (error) {
     console.error(error);
   }
 };
 </script>
-
-<template>
-  <div class="card">
-    <create_room @update-list="updateList"></create_room>
-    <Carousel :value="listRoom" :numVisible="3" :numScroll="3" :responsiveOptions="responsiveOptions" style="margin-top: 40px">
-      <template #item="slotProps">
-        <div class="border-1 surface-border border-round m-2 text-center py-5 px-3" @click="showDevice(slotProps.data)">
-          <div class="mb-3">
-            <img :src="'https://primefaces.org/cdn/primevue/images/product/bamboo-watch.jpg'" :alt="slotProps.data" class="w-6 shadow-2" />
-          </div>
-          <div>
-            <h4 class="mb-1">{{ slotProps.data.name }}</h4>
-            <h6 class="mt-0 mb-3">${{ slotProps.data.createdAt }}</h6>
-            <Tag :value="slotProps.data.inventoryStatus" :severity="getSeverity(slotProps.data.inventoryStatus)" />
-            <div class="mt-5 flex align-items-center justify-content-center gap-2">
-              <Button icon="pi pi-search" rounded />
-              <Button icon="pi pi-star-fill" rounded severity="secondary" />
-              <!-- Thêm nút xóa và gọi hàm xóa khi nút được nhấn -->
-              <Button icon="pi pi-trash" @click="deleteRoomHandler(slotProps.data._id)" />
-            </div>
-          </div>
-        </div>
-      </template>
-    </Carousel>
-  </div>
-</template>
