@@ -32,15 +32,28 @@ const getByRoom = async (req, res) => {
 
         const sensors = [];
         const leds = [];
-        for (let device of devices) {
-            if (device["deviceType"]["name"] === "LED") {
-                leds.push(device);
-            } else {
-                sensors.push(device);
+        const humidities = [];
+        const temperatures = [];
+        const linecharts = [];
+        for (let Device of devices) {
+            if (Device["deviceType"]["name"] === "LED") {
+                leds.push(Device);
+            } 
+            else if (Device["deviceType"]["name"] === "Temperature") {
+                temperatures.push(Device);
+            }
+            else if (Device["deviceType"]["name"] === "Humidity") {
+                humidities.push(Device);
+            }
+            else if (Device["deviceType"]["name"] === "LineChart") {
+                linecharts.push(Device);
+            }
+            else {
+                sensors.push(Device);
             }
         }
 
-        return res.status(StatusCodes.OK).json({ sensors, leds });
+        return res.status(StatusCodes.OK).json({ sensors, leds , humidities, temperatures, linecharts});
     } catch (err) {
         return res.status(400).json({"err": err.toString()});
     }

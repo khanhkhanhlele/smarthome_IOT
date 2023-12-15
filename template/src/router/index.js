@@ -14,8 +14,18 @@ const router = createRouter({
                     component: () => import('@/views/Dashboard.vue')
                 },
                 {
-                    path: '/room',
-                    name: 'room',
+                    path: '/home',
+                    name: 'home',
+                    component: () => import('@/views/home/home.vue')
+                },
+                {
+                    path: '/devicetype',
+                    name: 'devicetype',
+                    component: () => import('@/views/devicetype/list_devicetype.vue')
+                },
+                {
+                    path: '/setting',
+                    name: 'setting',
                     component: () => import('@/views/room/list_room.vue')
                 },
                 {
