@@ -68,7 +68,9 @@ const items = ref([
     {
         label: 'Profile',
         icon: 'pi pi-user',
-        command: () => {}
+        command: () => {
+            router.push('/');
+        }
     },
     {
         label: 'Log out',

@@ -26,7 +26,7 @@ const router = createRouter({
                 {
                     path: '/CRUD',
                     name: 'CRUD',
-                    component: () => import('@/views/room/list_room.vue')
+                    component: () => import('@/views/CRUD/list_room.vue')
                 },
                 {
                     path: '/device/room/:id',
