@@ -21,7 +21,7 @@ const lineData = ref({
 });
 onMounted(async () => {
     listDevice.value = await getDeviceByRoom(router.currentRoute.value.params.id);
-    listDevice.value.sensors.forEach((device) => {
+    listDevice.value.forEach((device) => {
         if (device.deviceType._id == '65734c30f92efe7b71369b05') {
             lineData.value.datasets.push({
                 label: device.deviceName,
@@ -55,7 +55,7 @@ const handleLed = async (id, status) => {
 };
 const updateList = (data) => {
     console.log(data);
-    listDevice.value.sensors.push(data.device);
+    listDevice.value.push(data.device);
     // eslint-disable-next-line no-constant-condition
     if (data.device.deviceType == '65734c30f92efe7b71369b05') {
         lineData.value.datasets.push({
@@ -70,14 +70,14 @@ const updateList = (data) => {
     }
 };
 const updateListAfterDelete = (deviceId) => {
-    const nameDevice = listDevice.value.sensors.filter((e) => e._id == deviceId)[0].deviceName;
+    const nameDevice = listDevice.value.filter((e) => e._id == deviceId)[0].deviceName;
     lineData.value.datasets = lineData.value.datasets.filter((e) => e.label != nameDevice);
-    listDevice.value.sensors = listDevice.value.sensors.filter((e) => e._id != deviceId);
+    listDevice.value.sensors = listDevice.value.filter((e) => e._id != deviceId);
 };
 
 const updateListAfterUpdate = (device) => {
     // console.log(deviceId);
-    listDevice.value.sensors.forEach((e) => {
+    listDevice.value.forEach((e) => {
         if (e._id == device._id) {
             e.deviceName = device.deviceName;
             e.value = device.value;
@@ -118,7 +118,7 @@ const lineOptions = ref({
     <div v-if="listDevice">
         <create_device @update-list="updateList" :roomId="router.currentRoute.value.params.id"></create_device>
         <div class="grid">
-            <div v-for="device in listDevice.sensors" :key="device" class="col-12 lg:col-6 xl:col-3">
+            <div v-for="device in listDevice" :key="device" class="col-12 lg:col-6 xl:col-3">
                 <div class="card mb-0 surface-200">
                     <div class="flex justify-content-between mb-3">
                         <div>
@@ -136,7 +136,7 @@ const lineOptions = ref({
                     <span class="text-green-500 font-medium">{{ confirmDevice(device.deviceType.name, device.value) }} </span>
                 </div>
             </div>
-            <div v-for="device in listDevice.leds" :key="device" class="col-12 lg:col-6 xl:col-3">
+            <!-- <div v-for="device in listDevice.leds" :key="device" class="col-12 lg:col-6 xl:col-3">
                 <div class="card mb-0" @click="handleLed(device._id, device.status)">
                     <div class="flex justify-content-between mb-3">
                         <div>
@@ -155,7 +155,7 @@ const lineOptions = ref({
                     </div>
                     <span class="text-green-500 font-medium">{{ device.status }} </span>
                 </div>
-            </div>
+            </div> -->
         </div>
         <Chart type="line" :data="lineData" :options="lineOptions" />
     </div>

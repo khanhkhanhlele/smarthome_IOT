@@ -89,7 +89,6 @@ const deleteRoomHandler = async (roomId) => {
 </script>
 
 <template>
-  setting chính là cái room cũ nhưng khi bấm vào phòng giao diện sẽ khác
   <div class="card">
     <create_room @update-list="updateList"></create_room>
     <Carousel :value="listRoom" :numVisible="3" :numScroll="3" :responsiveOptions="responsiveOptions" style="margin-top: 40px">

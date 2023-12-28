@@ -30,30 +30,31 @@ const getByRoom = async (req, res) => {
             roomId: roomId
         }).populate("deviceType");
 
-        const sensors = [];
-        const leds = [];
-        const humidities = [];
-        const temperatures = [];
-        const linecharts = [];
-        for (let Device of devices) {
-            if (Device["deviceType"]["name"] === "LED") {
-                leds.push(Device);
-            } 
-            else if (Device["deviceType"]["name"] === "Temperature") {
-                temperatures.push(Device);
-            }
-            else if (Device["deviceType"]["name"] === "Humidity") {
-                humidities.push(Device);
-            }
-            else if (Device["deviceType"]["name"] === "LineChart") {
-                linecharts.push(Device);
-            }
-            else {
-                sensors.push(Device);
-            }
-        }
+        // const sensors = [];
+        // const leds = [];
+        // const humidities = [];
+        // const temperatures = [];
+        // const linecharts = [];
+        // for (let Device of devices) {
+        //     if (Device["deviceType"]["name"] === "LED") {
+        //         leds.push(Device);
+        //     } 
+        //     else if (Device["deviceType"]["name"] === "Temperature") {
+        //         temperatures.push(Device);
+        //     }
+        //     else if (Device["deviceType"]["name"] === "Humidity") {
+        //         humidities.push(Device);
+        //     }
+        //     else if (Device["deviceType"]["name"] === "LineChart") {
+        //         linecharts.push(Device);
+        //     }
+        //     else {
+        //         sensors.push(Device);
+        //     }
+        // }
 
-        return res.status(StatusCodes.OK).json({ sensors, leds , humidities, temperatures, linecharts});
+        // return res.status(StatusCodes.OK).json({ sensors, leds , humidities, temperatures, linecharts});
+        return res.status(StatusCodes.OK).json(devices);
     } catch (err) {
         return res.status(400).json({"err": err.toString()});
     }

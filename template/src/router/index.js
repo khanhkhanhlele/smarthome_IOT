@@ -19,6 +19,11 @@ const router = createRouter({
                     component: () => import('@/views/home/home.vue')
                 },
                 {
+                    path: '/device_home/:id',
+                    name: 'device_home',
+                    component: () => import('@/views/home/device_home.vue')
+                },
+                {
                     path: '/devicetype',
                     name: 'devicetype',
                     component: () => import('@/views/devicetype/list_devicetype.vue')
