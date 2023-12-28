@@ -125,6 +125,7 @@ const lineOptions = ref({
                         </div>
                         <div class="flex flex-column">
                             <div class="flex align-items-center justify-content-center bg-blue-100 border-round" style="width: 2.5rem; height: 2.5rem">
+                                <i v-if="device.deviceType.name == 'LED'" class="pi pi-home text-blue-500 text-xl"></i>
                                 <i class="pi pi-home text-blue-500 text-xl"></i>
                             </div>
                             <Delete_device @update-list="updateListAfterDelete" :device="device"></Delete_device>
@@ -134,9 +135,8 @@ const lineOptions = ref({
                     <span class="text-green-500 font-medium">{{ confirmDevice(device.deviceType.name, device.value) }} </span>
                 </div>
             </div>
-            <div v-for="device in listDevice" :key="device" class="col-12 lg:col-6 xl:col-3">
-                <div v-if="device.devic
-                eType.name == 'LED'" class="card mb-0" @click="handleLed(device._id, device.status)">
+            <!-- <div v-for="device in listDevice" :key="device" class="col-12 lg:col-6 xl:col-3">
+                <div v-if="device.deviceType.name == 'LED'" class="card mb-0" @click="handleLed(device._id, device.status)">
                     <div class="flex justify-content-between mb-3">
                         <div>
                             <span class="block text-500 font-medium mb-3">{{ device.deviceType.description }}</span>
@@ -154,7 +154,7 @@ const lineOptions = ref({
                     </div>
                     <span class="text-green-500 font-medium">{{ device.status }} </span>
                 </div>
-            </div>
+            </div> -->
         </div>
         <Chart type="line" :data="lineData" :options="lineOptions" />
     </div>

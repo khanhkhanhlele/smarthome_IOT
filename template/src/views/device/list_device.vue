@@ -70,9 +70,10 @@ const updateList = (data) => {
     }
 };
 const updateListAfterDelete = (deviceId) => {
+    console.log(deviceId);
     const nameDevice = listDevice.value.filter((e) => e._id == deviceId)[0].deviceName;
     lineData.value.datasets = lineData.value.datasets.filter((e) => e.label != nameDevice);
-    listDevice.value.sensors = listDevice.value.filter((e) => e._id != deviceId);
+    listDevice.value = listDevice.value.filter((e) => e._id != deviceId);
 };
 
 const updateListAfterUpdate = (device) => {
@@ -136,26 +137,7 @@ const lineOptions = ref({
                     <span class="text-green-500 font-medium">{{ confirmDevice(device.deviceType.name, device.value) }} </span>
                 </div>
             </div>
-            <!-- <div v-for="device in listDevice.leds" :key="device" class="col-12 lg:col-6 xl:col-3">
-                <div class="card mb-0" @click="handleLed(device._id, device.status)">
-                    <div class="flex justify-content-between mb-3">
-                        <div>
-                            <span class="block text-500 font-medium mb-3">{{ device.deviceType.description }}</span>
-                            <div class="text-900 font-medium text-xl">{{ device.value }}</div>
-                        </div>
-                        <div class="flex flex-column">
-                            <div v-if="device.status == 'ON'" class="flex align-items-center justify-content-center border-round" style="width: 2.5rem; height: 2.5rem">
-                                <i class="pi pi-sun text-blue-500 text-xl"></i>
-                            </div>
-                            <div v-if="device.status == 'OFF'" class="flex align-items-center justify-content-center bg-blue-100 border-round" style="width: 2.5rem; height: 2.5rem">
-                                <i class="pi pi-sun text-blue-500 text-xl"></i>
-                            </div>
-                            <Delete_device @update-list="updateListAfterDelete" :device="device"></Delete_device>
-                        </div>
-                    </div>
-                    <span class="text-green-500 font-medium">{{ device.status }} </span>
-                </div>
-            </div> -->
+            
         </div>
         <Chart type="line" :data="lineData" :options="lineOptions" />
     </div>

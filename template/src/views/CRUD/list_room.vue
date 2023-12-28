@@ -3,6 +3,7 @@ import { ref, onMounted, defineEmits } from 'vue';
 import create_room from './create_room.vue';
 import { getRoom, deleteRoom } from '../../api/room';
 import { useRouter } from 'vue-router';
+import Toast from 'primevue/toast';
 
 const listRoom = ref([]);
 const router = useRouter();
@@ -68,10 +69,10 @@ const updateList = (data) => {
 
 const deleteRoomHandler = async (roomId) => {
   try {
-    const res = await deleteRoom({ roomId });
+    const res = await deleteRoom({ roomId:roomId });
     console.log(res);
 
-    if (res.message === 'Delete success') {
+    // if (res.message === 'Delete success') {
       // Thông báo xóa thành công
       if (res.result) {
         toast.add({ severity: 'success', summary: 'Success', detail: 'Created room sucessfully', life: 3000 });
@@ -79,9 +80,9 @@ const deleteRoomHandler = async (roomId) => {
 
       // Cập nhật danh sách phòng sau khi xóa
       listRoom.value = listRoom.value.filter((room) => room._id !== roomId);
-      emit('update-list', res);
+      // emit('update-list', res);
       await loadRooms();
-    }
+    // }
   } catch (error) {
     console.error(error);
   }
@@ -90,6 +91,7 @@ const deleteRoomHandler = async (roomId) => {
 
 <template>
   <div class="card">
+    <Toast/>
     <create_room @update-list="updateList"></create_room>
     <Carousel :value="listRoom" :numVisible="3" :numScroll="3" :responsiveOptions="responsiveOptions" style="margin-top: 40px">
       <template #item="slotProps">
