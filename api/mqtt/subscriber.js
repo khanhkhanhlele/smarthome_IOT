@@ -1,4 +1,5 @@
 const mqtt = require("mqtt");
+const WebSocket = require('ws');
 const DeviceData = require('../models/devicedata.model');
 const Device = require('../models/device.model');
 
@@ -7,10 +8,14 @@ const topic2 = process.env.TOPIC2;
 const host = process.env.HOST;
 const mqttPort = process.env.MQTTPORT;
 const mqttProtocol = process.env.MQTTPROTOCOL;
-// const username = process.env.MQTTUSERNAME;
-// const password = process.env.MQTTPASSWORD;
 
-//console.log(username, password);
+
+// Thông số của MQTT broker
+const mqttOptions = {
+    host: 'broker.emqx.io',
+    port: 1883,
+    protocol: 'mqtt',
+};
 
 const addOneData = async (data) => {
     try {
@@ -61,14 +66,11 @@ const addDatas = async (topic, message) => {
     }
 }
 
-const client = mqtt.connect({
-    host: host,
-    port: mqttPort,
-    protocol: mqttProtocol,
-    // username: username,
-    // password: password
-    }
-);
+// Kết nối tới MQTT broker
+const client = mqtt.connect(mqttOptions);
+
+// Kết nối tới WebSocket server
+const wss = new WebSocket.Server({ port: 8080 });
 
 client.subscribe(topic1);
 client.subscribe(topic2);
@@ -82,3 +84,15 @@ client.on('error', function (error) {
 });
 
 client.on("message", addDatas);
+
+// Khi có kết nối từ client WebSocket
+wss.on('connection', (ws) => {
+    console.log('Client connected to WebSocket');
+
+    // client.on("message", addDatas);
+    client.on('message', (topic, message) => {
+        // Gửi tin nhắn từ MQTT tới client WebSocket
+        ws.send(message.toString());
+    });
+
+});

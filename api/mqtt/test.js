@@ -1,6 +1,7 @@
 const WebSocket = require('ws');
 const mqtt = require('mqtt');
 
+const topic1 = process.env.TOPIC1;
 // Thông số của MQTT broker
 const mqttOptions = {
     host: 'broker.emqx.io',
@@ -21,7 +22,7 @@ wss.on('connection', (ws) => {
     console.log('Client connected to WebSocket');
 
     // Lắng nghe tin nhắn từ MQTT broker
-    mqttClient.subscribe('topic_name'); // Thay 'topic_name' bằng topic MQTT bạn muốn lắng nghe
+    mqttClient.subscribe(topic1); // Thay 'topic_name' bằng topic MQTT bạn muốn lắng nghe
 
     mqttClient.on('message', (topic, message) => {
         // Gửi tin nhắn từ MQTT tới client WebSocket
@@ -31,6 +32,6 @@ wss.on('connection', (ws) => {
     // Khi client WebSocket đóng kết nối
     ws.on('close', () => {
         console.log('Client disconnected from WebSocket');
-        mqttClient.unsubscribe('topic_name'); // Hủy đăng ký lắng nghe khi client đóng kết nối
+        mqttClient.unsubscribe(topic1); // Hủy đăng ký lắng nghe khi client đóng kết nối
     });
 });

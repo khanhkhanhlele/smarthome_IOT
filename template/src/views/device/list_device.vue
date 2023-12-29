@@ -5,7 +5,7 @@ import { getDeviceByRoom, updateDevice } from './../../api/device/index';
 import create_device from './crud/create_device.vue';
 import Delete_device from './crud/delete_device.vue';
 import Update_device from './crud/update_device.vue';
-
+import socket from './../../service/websocket';
 const router = useRouter();
 console.log(router.params);
 const listDevice = ref();
@@ -35,24 +35,18 @@ onMounted(async () => {
         }
     });
 });
-const confirmDevice = (type, value) => {
-    if (type == 'humidity_sensors') {
-        if (value > 90) return 'Warning';
-        else return 'Ổn định';
-    } else if (type == 'LED') {
-        return '';
-    } else if (type == 'temperature_sensors') {
-        if (value > 70) return 'Warning';
-        else return 'Ổn định';
-    }
-};
-const handleLed = async (id, status) => {
-    const sta = status == 'ON' ? 'OFF' : 'ON';
-    listDevice.value.leds.forEach((device) => {
-        if (device._id == id) device.status = sta;
+
+socket.addEventListener('message', (event) => {
+    console.log(event.data);
+    listDevice.value.forEach((device) => {
+        if (device._id == JSON.parse(event.data).deviceId) {
+            device.value = JSON.parse(event.data).value;
+            updateListAfterUpdate(device);
+        }
+        // console.log(JSON.parse(event.data).deviceId);
     });
-    await updateDevice(id, { status: sta });
-};
+});
+
 const updateList = (data) => {
     console.log(data);
     listDevice.value.push(data.device);
@@ -123,7 +117,8 @@ const lineOptions = ref({
                 <div class="card mb-0 surface-200">
                     <div class="flex justify-content-between mb-3">
                         <div>
-                            <span class="block text-500 font-medium mb-3">{{ device.deviceName }}</span>
+                            <span class="block text-lg font-bold mb-3">{{ device.deviceName }}</span>
+                            <span class="block text-500 font-medium mb-3">{{ device.deviceType.name }}</span>
                             <div class="text-900 font-medium text-xl">{{ device.value }}</div>
                         </div>
                         <div class="flex flex-column">
@@ -134,7 +129,6 @@ const lineOptions = ref({
                             <Update_device @update-list="updateListAfterUpdate" :device="device"></Update_device>
                         </div>
                     </div>
-                    <span class="text-green-500 font-medium">{{ confirmDevice(device.deviceType.name, device.value) }} </span>
                 </div>
             </div>
             
