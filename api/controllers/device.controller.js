@@ -30,30 +30,6 @@ const getByRoom = async (req, res) => {
             roomId: roomId
         }).populate("deviceType");
 
-        // const sensors = [];
-        // const leds = [];
-        // const humidities = [];
-        // const temperatures = [];
-        // const linecharts = [];
-        // for (let Device of devices) {
-        //     if (Device["deviceType"]["name"] === "LED") {
-        //         leds.push(Device);
-        //     } 
-        //     else if (Device["deviceType"]["name"] === "Temperature") {
-        //         temperatures.push(Device);
-        //     }
-        //     else if (Device["deviceType"]["name"] === "Humidity") {
-        //         humidities.push(Device);
-        //     }
-        //     else if (Device["deviceType"]["name"] === "LineChart") {
-        //         linecharts.push(Device);
-        //     }
-        //     else {
-        //         sensors.push(Device);
-        //     }
-        // }
-
-        // return res.status(StatusCodes.OK).json({ sensors, leds , humidities, temperatures, linecharts});
         return res.status(StatusCodes.OK).json(devices);
     } catch (err) {
         return res.status(400).json({"err": err.toString()});
@@ -88,7 +64,7 @@ const addToRoom = async (req, res) => {
         return res.status(400).json({"err": err.toString()});
     }
 }
-
+const public = require('../mqtt/public');
 const update = async (req, res) => {
     try {
         const deviceId = req.params.deviceId;
@@ -101,6 +77,8 @@ const update = async (req, res) => {
             throw new NotFoundError("Device not found");
         }
         // thêm đoạn code thay đổi status đến thiết bị
+        console.log(req.body);
+        public.publish(req.body);
 
         return res.status(StatusCodes.OK).json({ result });
     } catch (err) {

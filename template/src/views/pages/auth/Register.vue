@@ -1,4 +1,52 @@
+<script setup>
+import { useLayout } from '@/layout/composables/layout';
+import { ref, computed } from 'vue';
+import to from './../../../utils/awaitTo';
+import { useRouter } from 'vue-router';
+import { useToast } from 'primevue/usetoast';
+import { register } from './../../../api/user/index';
+
+const toast = useToast();
+const { layoutConfig } = useLayout();
+const email = ref('');
+const name = ref('');
+const password = ref('');
+const confirmPassword = ref('');
+const router = useRouter();
+
+const registerFunc = async () => {
+  // Thực hiện các bước để đăng ký tài khoản
+  if(password.value !== confirmPassword.value) {
+    toast.add({ severity: 'error', summary: 'Error', detail: 'Password and confirm password not match', life: 3000 });
+  };
+  try{
+    console.log(
+      {name: name.value, email: email.value, password: password.value }
+    );
+    const res = await register({name: name.value, email: email.value, password: password.value });
+    console.log(res);
+    if(res.token) {
+      toast.add({ severity: 'success', summary: 'Success', detail: 'Register success', life: 3000 });
+      //wait 1s
+      setTimeout(() => {
+        router.push('/auth/login');
+      }, 1000);
+    }
+  } catch (error) {
+    console.error(error);
+    toast.add({ severity: 'error', summary: 'Error', detail: 'Register failed', life: 3000 });
+  }
+  
+};
+
+const logoUrl = computed(() => {
+  return `layout/images/${layoutConfig.darkTheme.value ? 'logo-white' : 'logo-dark'}.svg`;
+});
+</script>
+
+
 <template>
+  <Toast />
     <div class="surface-ground flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden">
       <div class="flex flex-column align-items-center justify-content-center">
         <img :src="logoUrl" alt="Sakai logo" class="mb-5 w-6rem flex-shrink-0" />
@@ -11,6 +59,9 @@
             </div>
   
             <div>
+              <label for="username1" class="block text-900 text-xl font-medium mb-2">Username</label>
+              <InputText id="username1" type="text" placeholder="Username" class="w-full md:w-30rem mb-5" style="padding: 1rem" v-model="name" />
+
               <label for="email1" class="block text-900 text-xl font-medium mb-2">Email</label>
               <InputText id="email1" type="text" placeholder="Email address" class="w-full md:w-30rem mb-5" style="padding: 1rem" v-model="email" />
   
@@ -27,40 +78,16 @@
       </div>
     </div>
   </template>
-  
-  <script setup>
-  import { useLayout } from '@/layout/composables/layout';
-  import { ref, computed } from 'vue';
-  import { useUserStore } from './../../../store/user';
-  import to from './../../../utils/awaitTo';
-  import { useRouter } from 'vue-router';
-  
-  const { layoutConfig } = useLayout();
-  const email = ref('');
-  const password = ref('');
-  const confirmPassword = ref('');
-  const userStore = useUserStore();
-  const router = useRouter();
-  
-  const registerFunc = async () => {
-    // Thực hiện các bước để đăng ký tài khoản
-    //const res = await to(userStore.register({ email: email.value, password: password.value }));
-    //console.log(res);
-    // if (!res[1]) {
-      // Đăng ký thành công
-      router.push('/'); // Chuyển hướng sau khi đăng ký thành công
-    // } else {
-    //   // Xử lý lỗi đăng ký
-    //   console.error('Registration failed:', res[1]);
-    //   router.push('/error');
-    // }
-  };
-  
-  const logoUrl = computed(() => {
-    return `layout/images/${layoutConfig.darkTheme.value ? 'logo-white' : 'logo-dark'}.svg`;
-  });
-  </script>
-  
-  <style scoped>
-  </style>
+
+<style scoped>
+.pi-eye {
+    transform: scale(1.6);
+    margin-right: 1rem;
+}
+
+.pi-eye-slash {
+    transform: scale(1.6);
+    margin-right: 1rem;
+}
+</style>
   

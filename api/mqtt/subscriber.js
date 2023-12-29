@@ -3,8 +3,7 @@ const WebSocket = require('ws');
 const DeviceData = require('../models/devicedata.model');
 const Device = require('../models/device.model');
 
-const topic1 = process.env.TOPIC1;
-const topic2 = process.env.TOPIC2;
+const PUBLISH_TOPIC = process.env.PUBLISH_TOPIC;
 const host = process.env.HOST;
 const mqttPort = process.env.MQTTPORT;
 const mqttProtocol = process.env.MQTTPROTOCOL;
@@ -72,8 +71,8 @@ const client = mqtt.connect(mqttOptions);
 // Kết nối tới WebSocket server
 const wss = new WebSocket.Server({ port: 8080 });
 
-client.subscribe(topic1);
-client.subscribe(topic2);
+client.subscribe(PUBLISH_TOPIC);
+// client.subscribe(topic2);
 
 client.on('connect', function () {
     console.log('Connected');

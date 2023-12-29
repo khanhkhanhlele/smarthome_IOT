@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import { ACCESS_TOKEN_KEY } from '../utils/enum/enum';
 import Storage from '../utils/Storage';
-import { login } from '../api/user/index';
+import { login, register } from '../api/user/index';
 import { store } from '.';
 
 interface UserState {

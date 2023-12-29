@@ -41,7 +41,7 @@ socket.addEventListener('message', (event) => {
     listDevice.value.forEach((device) => {
         if (device._id == JSON.parse(event.data).deviceId) {
             device.value = JSON.parse(event.data).value;
-            updateListAfterUpdate(device);
+            updateListWebsocket(device);
         }
         // console.log(JSON.parse(event.data).deviceId);
     });
@@ -68,6 +68,17 @@ const updateListAfterDelete = (deviceId) => {
     const nameDevice = listDevice.value.filter((e) => e._id == deviceId)[0].deviceName;
     lineData.value.datasets = lineData.value.datasets.filter((e) => e.label != nameDevice);
     listDevice.value = listDevice.value.filter((e) => e._id != deviceId);
+};
+
+const updateListWebsocket = (device) => {
+    // console.log(deviceId);
+    listDevice.value.forEach((e) => {
+        if (e._id == device._id) {
+            e.deviceName = device.deviceName;
+            e.value = device.value;
+        }
+    });
+    lineData.value.datasets[0].data = [...lineData.value.datasets[0].data.slice(1), device.value];
 };
 
 const updateListAfterUpdate = (device) => {

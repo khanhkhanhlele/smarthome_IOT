@@ -5,7 +5,9 @@ import AppConfig from '@/layout/AppConfig.vue';
 import { useUserStore } from './../../../store/user';
 import to from './../../../utils/awaitTo';
 import { useRouter } from 'vue-router';
+import { useToast } from 'primevue/usetoast';
 
+const toast = useToast();
 const { layoutConfig } = useLayout();
 const email = ref('');
 const password = ref('');
@@ -15,8 +17,16 @@ const router = useRouter();
 
 const loginFunc = async () => {
     const res = await to(userStore.login({ email: email.value, password: password.value }));
-    console.log(res);
-    if (!res[1]) router.push('/');
+    
+    if(res[0].message != "Unknown error, please try again"){
+        router.push('/');
+    }
+    else{
+        console.log(res[0].message);
+        toast.add({ severity: 'error', summary: 'Error', detail: 'Login failed', life: 3000 });
+    }
+
+    // if (!res[1]) router.push('/');
 };
 
 const registerFunc = () => {
@@ -29,6 +39,7 @@ const logoUrl = computed(() => {
 </script>
 
 <template>
+    <Toast />
     <div class="surface-ground flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden">
         <div class="flex flex-column align-items-center justify-content-center">
             <img :src="logoUrl" alt="Sakai logo" class="mb-5 w-6rem flex-shrink-0" />

@@ -43,7 +43,7 @@ export function logout() {
 }
 export function register(data: API.RegisterParams) {
     return request({
-        url: 'auth/register',
+        url: 'api/auth/register',
         method: 'post',
         data
     });

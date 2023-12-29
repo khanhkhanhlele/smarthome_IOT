@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted, defineEmits } from 'vue';
 import create_room from './create_room.vue';
+import Delete_room from './delete_room.vue';
 import { getRoom, deleteRoom } from '../../api/room';
 import { useRouter } from 'vue-router';
 import Toast from 'primevue/toast';
@@ -60,44 +61,31 @@ const getSeverity = (status) => {
 };
 
 const showDevice = (data) => {
+  console.log(data);
   router.push(`/device/room/${data._id}`);
 };
 
-const updateList = (data) => {
+const updateListAfterCreate = (data) => {
   listRoom.value.push(data.result);
 };
 
-const deleteRoomHandler = async (roomId) => {
-  try {
-    const res = await deleteRoom({ roomId:roomId });
-    console.log(res);
 
-    // if (res.message === 'Delete success') {
-      // Thông báo xóa thành công
-      if (res.result) {
-        toast.add({ severity: 'success', summary: 'Success', detail: 'Created room sucessfully', life: 3000 });
-      }
 
-      // Cập nhật danh sách phòng sau khi xóa
-      listRoom.value = listRoom.value.filter((room) => room._id !== roomId);
-      // emit('update-list', res);
-      await loadRooms();
-    // }
-  } catch (error) {
-    console.error(error);
-  }
+const updateListAfterDelete = (roomId) => {
+  listRoom.value = listRoom.value.filter((room) => room._id !== roomId);
 };
+
 </script>
 
 <template>
   <div class="card">
     <Toast/>
-    <create_room @update-list="updateList"></create_room>
+    <create_room @update-list="updateListAfterCreate"></create_room>
     <Carousel :value="listRoom" :numVisible="3" :numScroll="3" :responsiveOptions="responsiveOptions" style="margin-top: 40px">
       <template #item="slotProps">
-        <div class="border-1 surface-border border-round m-2 text-center py-5 px-3" @click="showDevice(slotProps.data)">
+        <div class="border-1 surface-border border-round m-2 text-center py-5 px-3">
           <div class="mb-3">
-            <img :src="'https://primefaces.org/cdn/primevue/images/product/bamboo-watch.jpg'" :alt="slotProps.data" class="w-6 shadow-2" />
+            <img :src="'https://primefaces.org/cdn/primevue/images/product/bamboo-watch.jpg'" :alt="slotProps.data" class="w-6 shadow-2" @click="showDevice(slotProps.data)"/>
           </div>
           <div>
             <h4 class="mb-1">{{ slotProps.data.name }}</h4>
@@ -107,7 +95,11 @@ const deleteRoomHandler = async (roomId) => {
               <Button icon="pi pi-search" rounded />
               <Button icon="pi pi-star-fill" rounded severity="secondary" />
               <!-- Thêm nút xóa và gọi hàm xóa khi nút được nhấn -->
-              <Button icon="pi pi-trash" @click="deleteRoomHandler(slotProps.data._id)" />
+              <!-- <Button icon="pi pi-trash" @click="deleteRoomHandler(slotProps.data._id)" /> -->
+              <Delete_room @update-list="updateListAfterDelete" :room ="slotProps.data"></Delete_room>
+              <!-- <Delete_device @update-list="updateListAfterDelete" :device="device"></Delete_device> -->
+
+
             </div>
           </div>
         </div>

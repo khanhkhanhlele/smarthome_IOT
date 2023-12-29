@@ -10,7 +10,7 @@ const show = async () => {
 };
 const submit = async () => {
     const res = await deleteDevice(props.device._id);
-    if (res.device) toast.add({ severity: 'success', summary: 'Success', detail: 'Created room sucessfully', life: 3000 });
+    if (res.device) toast.add({ severity: 'success', summary: 'Success', detail: 'Delete device sucessfully', life: 3000 });
     console.log(res);
     emit('update-list', props.device._id);
     visible.value = false;

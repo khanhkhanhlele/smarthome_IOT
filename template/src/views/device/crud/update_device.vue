@@ -30,6 +30,7 @@ const submit = async () => {
     form.value.roomId = props.roomId;
     console.log(deviceTypeNames.value);
     form.value.deviceTypeId = deviceTypeNames.value.id;
+    form.value.deviceId = props.device._id;
     const res = await updateDevice(props.device._id, form.value);
     if (res.result) toast.add({ severity: 'success', summary: 'Success', detail: 'Updated device sucessfully', life: 3000 });
     console.log(res);
