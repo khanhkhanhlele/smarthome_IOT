@@ -85,19 +85,16 @@ const updateListAfterDelete = (roomId) => {
       <template #item="slotProps">
         <div class="border-1 surface-border border-round m-2 text-center py-5 px-3">
           <div class="mb-3">
-            <img :src="'https://primefaces.org/cdn/primevue/images/product/bamboo-watch.jpg'" :alt="slotProps.data" class="w-6 shadow-2" @click="showDevice(slotProps.data)"/>
+            <img :src="'./../../../public/demo/images/house/house'+ slotProps.index +'.jpg'" :alt="slotProps.data" class="w-10 shadow-2" @click="showDevice(slotProps.data)"/>
           </div>
           <div>
             <h4 class="mb-1">{{ slotProps.data.name }}</h4>
-            <h6 class="mt-0 mb-3">${{ slotProps.data.createdAt }}</h6>
-            <Tag :value="slotProps.data.inventoryStatus" :severity="getSeverity(slotProps.data.inventoryStatus)" />
+            <!-- <h6 class="mt-0 mb-3">${{ slotProps.data.createdAt }}</h6> -->
+            <!-- <Tag :value="slotProps.data.inventoryStatus" :severity="getSeverity(slotProps.data.inventoryStatus)" /> -->
             <div class="mt-5 flex align-items-center justify-content-center gap-2">
               <Button icon="pi pi-search" rounded />
               <Button icon="pi pi-star-fill" rounded severity="secondary" />
-              <!-- Thêm nút xóa và gọi hàm xóa khi nút được nhấn -->
-              <!-- <Button icon="pi pi-trash" @click="deleteRoomHandler(slotProps.data._id)" /> -->
               <Delete_room @update-list="updateListAfterDelete" :room ="slotProps.data"></Delete_room>
-              <!-- <Delete_device @update-list="updateListAfterDelete" :device="device"></Delete_device> -->
 
 
             </div>
