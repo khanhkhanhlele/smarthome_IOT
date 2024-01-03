@@ -126,12 +126,12 @@ const lineOptions = ref({
         <create_device @update-list="updateList" :roomId="router.currentRoute.value.params.id"></create_device>
         <div class="grid">
             <div v-for="device in listDevice" :key="device" class="col-12 lg:col-6 xl:col-3">
-                <div class="card mb-0 surface-200">
+                <div class="card mb-0 surface-200 background-image" :style="{ backgroundImage: 'url(./../../../demo/images/deviceType/' + device.deviceType.name + '.png)' }">
                     <div class="flex justify-content-between mb-3">
-                        <div>
-                            <span class="block text-lg font-bold mb-3">{{ device.deviceName }}</span>
-                            <span class="block text-500 font-medium mb-3">{{ device.deviceType.name }}</span>
-                            <div class="text-900 font-medium text-xl">{{ device.value }}</div>
+                        <div >
+                            <span class="block text-lg font-bold mb-3 text-xl text-background">{{ device.deviceName }}</span>
+                            <span class="block text-500 font-medium mb-3 text-background">{{ device.deviceType.name }}</span>
+                            <div class="text-900 font-medium text-xl text-background">{{ device.value }}</div>
                         </div>
                         <div class="flex flex-column">
                             <!-- <div class="flex align-items-center justify-content-center bg-blue-100 border-round" style="width: 2.5rem; height: 2.5rem">
@@ -150,4 +150,17 @@ const lineOptions = ref({
     </div>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.background-image {
+    // background-image: url('https://primefaces.org/cdn/primevue/images/product/bamboo-watch.jpg');
+    background-size: cover; /* Hoặc sử dụng giá trị khác phù hợp */
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.text-background {
+  background-color: white; /* Nền màu trắng */
+  padding: 2px; /* Thêm đệm xung quanh text */
+  border-radius: 5px; /* Nếu bạn muốn các góc được bo tròn */
+}
+
+</style>

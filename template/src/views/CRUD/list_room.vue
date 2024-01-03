@@ -47,18 +47,6 @@ const responsiveOptions = ref([
   },
 ]);
 
-const getSeverity = (status) => {
-  switch (status) {
-    case 'INSTOCK':
-      return 'success';
-    case 'LOWSTOCK':
-      return 'warning';
-    case 'OUTOFSTOCK':
-      return 'danger';
-    default:
-      return null;
-  }
-};
 
 const showDevice = (data) => {
   console.log(data);
@@ -85,7 +73,7 @@ const updateListAfterDelete = (roomId) => {
       <template #item="slotProps">
         <div class="border-1 surface-border border-round m-2 text-center py-5 px-3">
           <div class="mb-3">
-            <img :src="'./../../../public/demo/images/house/house'+ slotProps.index +'.jpg'" :alt="slotProps.data" class="w-10 shadow-2" @click="showDevice(slotProps.data)"/>
+            <img :src="'./../../../demo/images/house/house'+ slotProps.index +'.jpg'" :alt="slotProps.data" class="w-10 shadow-2" @click="showDevice(slotProps.data)"/>
           </div>
           <div>
             <h4 class="mb-1">{{ slotProps.data.name }}</h4>

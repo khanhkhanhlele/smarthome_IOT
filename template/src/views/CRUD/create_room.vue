@@ -20,11 +20,11 @@ const submit = async () => {
     <div>
         <Button label="Create" icon="pi pi-external-link" @click="visible = true" />
         <Toast />
-        <Dialog v-model:visible="visible" modal header="Tạo phòng mới" :style="{ width: '50rem' }" :breakpoints="{ '1199px': '75vw', '575px': '90vw' }">
+        <Dialog v-model:visible="visible" modal header="Tạo nhà  mới" :style="{ width: '50rem' }" :breakpoints="{ '1199px': '75vw', '575px': '90vw' }">
             <div class="flex flex-column gap-2">
-                <label for="username">Room name</label>
+                <label for="username">House name</label>
                 <InputText id="username" v-model="name" aria-describedby="username-help" />
-                <small id="username-help">Enter room name.</small>
+                <small id="username-help">Enter house name.</small>
                 <Button type="submit" @click="submit" label="Create" />
             </div>
         </Dialog>
