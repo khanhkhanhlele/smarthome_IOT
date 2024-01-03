@@ -53,7 +53,7 @@ const props = defineProps({
             <div class="flex flex-column gap-2">
                 <label for="username">Device name</label>
                 <InputText id="username" v-model="form.deviceName" aria-describedby="username-help" />
-                <label for="username">Value</label>
+                <label for="username">Value: {{ props.device.deviceType.description }}</label>
                 <InputText id="username" v-model="form.value" aria-describedby="username-help" />
                 <label for="username">Device type</label>
                 <Dropdown v-model="deviceTypeNames" :options="deviceTypes" optionLabel="name" placeholder="Select a device type" class="w-full" />

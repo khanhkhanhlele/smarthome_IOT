@@ -34,8 +34,9 @@ export const useUserStore = defineStore({
         async login(params) {
             try {
                 const  {user, token}  = await login(params);
+                console.log(user);
                 this.setToken(token);
-                Storage.set('INFO_ACCOUNT', data?.user);
+                Storage.set('INFO_ACCOUNT', user);
             } catch (error) {
                 return Promise.reject(error);
             }

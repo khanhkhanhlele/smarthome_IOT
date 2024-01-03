@@ -93,7 +93,6 @@ const onSortChange = (event) => {
                                     <img :src="'./../../../public/demo/images/deviceType/' + slotProps.data.name + '.png'" :alt="slotProps.data.name" class="w-9 shadow-2 my-3 mx-0" />
                                     <div class="text-2xl font-bold">{{ slotProps.data.name }}</div>
                                     <div class="mb-3">{{ slotProps.data.description }}</div>
-                                    <Rating :modelValue="slotProps.data.rating" :readonly="true" :cancel="false"></Rating>
                                 </div>
                             </div>
                         </div>

@@ -88,7 +88,7 @@ const toggle = (event) => {
 
 
 const userData = Storage.get('INFO_ACCOUNT', null);
-// const userName = userData.name;
+const userName = userData.name;
 </script>
 
 <template>

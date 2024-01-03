@@ -5,6 +5,7 @@ import { getDeviceByRoom, updateDevice } from './../../api/device/index';
 import create_device from './crud/create_device.vue';
 import Delete_device from './crud/delete_device.vue';
 import Update_device from './crud/update_device.vue';
+import Detail_device from './crud/detail_device.vue';
 import socket from './../../service/websocket';
 const router = useRouter();
 console.log(router.params);
@@ -133,9 +134,10 @@ const lineOptions = ref({
                             <div class="text-900 font-medium text-xl">{{ device.value }}</div>
                         </div>
                         <div class="flex flex-column">
-                            <div class="flex align-items-center justify-content-center bg-blue-100 border-round" style="width: 2.5rem; height: 2.5rem">
+                            <!-- <div class="flex align-items-center justify-content-center bg-blue-100 border-round" style="width: 2.5rem; height: 2.5rem">
                                 <i class="pi pi-home text-blue-500 text-xl"></i>
-                            </div>
+                            </div> -->
+                            <Detail_device  :device="device"></Detail_device>
                             <Delete_device @update-list="updateListAfterDelete" :device="device"></Delete_device>
                             <Update_device @update-list="updateListAfterUpdate" :device="device"></Update_device>
                         </div>
@@ -144,7 +146,7 @@ const lineOptions = ref({
             </div>
             
         </div>
-        <Chart type="line" :data="lineData" :options="lineOptions" />
+        <!-- <Chart type="line" :data="lineData" :options="lineOptions" /> -->
     </div>
 </template>
 

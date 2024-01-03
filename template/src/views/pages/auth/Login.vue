@@ -17,8 +17,8 @@ const router = useRouter();
 
 const loginFunc = async () => {
     const res = await to(userStore.login({ email: email.value, password: password.value }));
-    
-    if(res[0].message != "Unknown error, please try again"){
+    console.log(res);
+    if(!res[1]){
         router.push('/');
     }
     else{
