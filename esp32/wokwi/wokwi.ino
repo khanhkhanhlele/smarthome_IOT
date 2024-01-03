@@ -62,7 +62,7 @@ void setup_wifi() {
   bool res;
   // res = wm.autoConnect(); // auto generated AP name from chipid
   // res = wm.autoConnect("AutoConnectAP"); // anonymous ap
-  res = wm.autoConnect("AutoConnectAP","password"); // password protected ap
+  res = wm.autoConnect("New device IOT",""); // password protected ap
 
   if(!res) {
       Serial.println("Failed to connect");
@@ -175,6 +175,6 @@ void loop() {
       Serial.print("PUBLISH JSON: ");
       Serial.println(outtemp);
     }
-    delay(5000);
+    delay(50000);
   }
 }
