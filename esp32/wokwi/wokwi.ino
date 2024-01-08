@@ -32,7 +32,7 @@ const char* command_topic = "IOT_command_topic"; // Command topic
 const char* humID = "657c190d9ab424a131ca8626";
 const char* temID = "657c19149ab424a131ca862b";
 const char* ledID = "657c19009ab424a131ca8621";
-const char* servoID = "658e9188b927fe0ad545d247";
+const char* servoID = "6592c87f8fb3d324696943c1";
 StaticJsonDocument<256> doc;
 
 
@@ -146,35 +146,35 @@ void loop() {
   }
   client.loop();
   unsigned long currentMillis = millis(); // Read current time
-  if (currentMillis - previousMillis >= interval) {
-    previousMillis = currentMillis;
+  // if (currentMillis - previousMillis >= interval) {
+  //   previousMillis = currentMillis;
 
-    sensors_event_t event;
-    dht.temperature().getEvent(&event);
-    float tem = event.temperature;
-    dht.humidity().getEvent(&event);
-    float hum = event.relative_humidity;
-    Serial.println(tem,hum);
-    if (!isnan(tem) && !isnan(hum)) {
+  //   sensors_event_t event;
+  //   dht.temperature().getEvent(&event);
+  //   float tem = event.temperature;
+  //   dht.humidity().getEvent(&event);
+  //   float hum = event.relative_humidity;
+  //   // Serial.println(tem,hum);
+  //   if (!isnan(tem) && !isnan(hum)) {
       
-      doc["name"] = "humidity";
-      doc["value"] = hum; //  humidity
-      doc["deviceId"] = humID;
-      char outhum[256];
-      serializeJson(doc, outhum);
-      client.publish(public_topic, outhum, true);
-      Serial.print("PUBLISH JSON: ");
-      Serial.println(outhum);
+  //     doc["name"] = "humidity";
+  //     doc["value"] = hum; //  humidity
+  //     doc["deviceId"] = humID;
+  //     char outhum[256];
+  //     serializeJson(doc, outhum);
+  //     client.publish(public_topic, outhum, true);
+  //     Serial.print("PUBLISH JSON: ");
+  //     Serial.println(outhum);
 
-      doc["name"] = "temperature";
-      doc["value"] = tem; // temperature 
-      doc["deviceId"] = temID;
-      char outtemp[256];
-      serializeJson(doc, outtemp);
-      client.publish(public_topic, outtemp, true);
-      Serial.print("PUBLISH JSON: ");
-      Serial.println(outtemp);
-    }
-    delay(50000);
-  }
+  //     doc["name"] = "temperature";
+  //     doc["value"] = tem; // temperature 
+  //     doc["deviceId"] = temID;
+  //     char outtemp[256];
+  //     serializeJson(doc, outtemp);
+  //     client.publish(public_topic, outtemp, true);
+  //     Serial.print("PUBLISH JSON: ");
+  //     Serial.println(outtemp);
+  //   }
+  //   delay(50000);
+  // }
 }

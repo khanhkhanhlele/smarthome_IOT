@@ -49,7 +49,7 @@ socket.addEventListener('message', (event) => {
 });
 
 const updateList = (data) => {
-    console.log(data);
+    console.log(data.device);
     listDevice.value.push(data.device);
     // eslint-disable-next-line no-constant-condition
     if (data.device.deviceType == '65734c30f92efe7b71369b05') {

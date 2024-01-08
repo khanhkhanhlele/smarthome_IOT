@@ -23,11 +23,9 @@ const show = async () => {
 };
 const submit = async () => {
     form.value.roomId = props.roomId;
-    console.log(deviceTypeNames.value);
     form.value.deviceTypeId = deviceTypeNames.value.id;
     const res = await createDevice(form.value);
     if (res.device) toast.add({ severity: 'success', summary: 'Success', detail: 'Created room sucessfully', life: 3000 });
-    console.log(res);
     emit('update-list', res);
     visible.value = false;
 };

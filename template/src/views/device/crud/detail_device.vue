@@ -24,11 +24,18 @@ const props = defineProps({
             <div class="flex flex-column gap-2">
                 <!-- <label for="username">Device: {{ props.device }}</label> -->
                 <label for="username">Device: {{ props.device.deviceName }}</label>
+                <label for="username">HomeID: {{ props.device.roomId }}</label>
                 <label for="username">DeviceID: {{ props.device._id }}</label>
+                <label for="username">Host: c878d64840454cd6a4b648b5a1361691.s1.eu.hivemq.cloud</label>
+                <label for="username">Post: 8883</label>
+                <label for="username">Topic: IOT_command_topic</label>
                 <label for="username">Value: {{ props.device.deviceType.description }}</label>
             </div>
         </Dialog>
     </div>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+
+
+</style>

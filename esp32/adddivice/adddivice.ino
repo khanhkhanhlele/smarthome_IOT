@@ -24,7 +24,7 @@ Servo servo;
 
 
 //define your default values here, if there are different values in config.json, they are overwritten.
-char deviceID[40] = "657c19009ab424a131ca8621";
+char deviceID[40] = "6596bc7df9827783cbcbcfa8";
 const char* mqttServer = "broker.emqx.io";
 const char* clientID = "ujaisldaaasdfgh;laslksdja1"; // Client ID username+0001
 const char* public_topic = "IOT_publish_topic"; // Publish topic
@@ -146,10 +146,10 @@ void setup_wifi() {
   //and goes into a blocking loop awaiting configuration
   if (!wifiManager.autoConnect("New device IOT", "")) {
     Serial.println("failed to connect and hit timeout");
-    delay(3000);
+    // delay(3000);
     //reset and try again, or maybe put it to deep sleep
     ESP.restart();
-    delay(5000);
+    // delay(5000);
   }
 
   //if you get here you have connected to the WiFi
